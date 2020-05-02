@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AppLoading } from "expo";
+import { AppNavigation } from "./src/navigation/AppNavigation";
 import { bootstrap } from "./src/bootstrap";
 
 export default function App() {
@@ -11,14 +12,10 @@ export default function App() {
       <AppLoading
         startAsync={bootstrap}
         onFinish={() => setIsReady(true)}
-        onError={err => cpnsole.log(err)}
+        onError={err => console.log(err)}
       />
     );
   }
 
-  return (
-    <View>
-      <Text>Hey!</Text>
-    </View>
-  );
+  return <AppNavigation />;
 }
