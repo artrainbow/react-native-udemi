@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { DATA } from "../data";
 import { Post } from "../components/Post";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { PostList } from "../components/PostList";
+import { useDispatch, useSelector } from "react-redux";
+import { loadPosts } from "../store/actions/post";
 
 export const MainScreen = ({ navigation }) => {
   const openPostHandler = post => {
@@ -13,7 +15,13 @@ export const MainScreen = ({ navigation }) => {
       booked: post.booked
     });
   };
-  return <PostList data={DATA} onOpen={openPostHandler} />;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadPosts());
+  }, [dispatch]);
+  const allPosts = useSelector(state => state.post.allPosts);
+
+  return <PostList data={allPosts} onOpen={openPostHandler} />;
 };
 
 MainScreen.navigationOptions = ({ navigation }) => ({
@@ -23,7 +31,7 @@ MainScreen.navigationOptions = ({ navigation }) => ({
       <Item
         title="Take photo"
         iconName="ios-camera"
-        onPress={() => navigation.push('Create')}
+        onPress={() => navigation.push("Create")}
       />
     </HeaderButtons>
   ),
