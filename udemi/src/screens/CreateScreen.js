@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   View,
   Text,
@@ -12,19 +12,23 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { PhotoPicker } from "../components/PhotoPicker";
 import { addPost } from "../store/actions/post";
 import { AppHeaderIcon } from "../components/AppHeaderIcon";
 import { THEME } from "../theme.js";
 
-const img =
-  "https://static.coindesk.com/wp-content/uploads/2019/01/shutterstock_1012724596-860x430.jpg";
-
 export const CreateScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const [text, setText] = useState("");
+  const imageRef = useRef();
+
+  const photoPickHandler = uri => {
+    imageRef.current = uri;
+  };
+
   const saveHandler = () => {
     const post = {
-      img,
+      img: imageRef.current,
       text,
       date: new Date().toJSON(),
       booked: false
@@ -32,6 +36,7 @@ export const CreateScreen = ({ navigation }) => {
     dispatch(addPost(post));
     navigation.navigate("Main");
   };
+
   return (
     <ScrollView style={styles.wrapper}>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss}>
@@ -44,11 +49,12 @@ export const CreateScreen = ({ navigation }) => {
             onChangeText={setText}
             multiline
           />
-          <Image style={styles.image} source={{ uri: img }} />
+          <PhotoPicker onPick={photoPickHandler} />
           <Button
             title="Создать пост"
             color={THEME.MAIN_COLOR}
             onPress={saveHandler}
+            disabled={!text}
           />
         </View>
       </TouchableWithoutFeedback>

@@ -22,8 +22,8 @@ export const PostScreen = ({ navigation }) => {
   );
 
   const toggleHandler = useCallback(() => {
-    dispatch(toggleBooked(postId));
-  }, [dispatch, postId]);
+    dispatch(toggleBooked(post));
+  }, [dispatch, post]);
 
   const booked = useSelector(state =>
     state.post.bookedPosts.some(post => post.id === postId)
@@ -79,14 +79,13 @@ export const PostScreen = ({ navigation }) => {
 };
 
 PostScreen.navigationOptions = ({ navigation }) => {
-  const postId = navigation.getParam("postId");
   const date = navigation.getParam("date");
   const booked = navigation.getParam("booked");
   const toggleHandler = navigation.getParam("toggleHandler");
   const iconName = booked ? "ios-star" : "ios-star-outline";
 
   return {
-    headerTitle: `Пост №${postId} от ${new Date(date).toLocaleDateString()}`,
+    headerTitle: `Пост от ${new Date(date).toLocaleDateString()}`,
     headerRight: (
       <HeaderButtons HeaderButtonComponent={AppHeaderIcon}>
         <Item title="Take photo" iconName={iconName} onPress={toggleHandler} />
