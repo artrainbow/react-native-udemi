@@ -19,7 +19,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.artrainbow.self_blog",
+      "bundleIdentifier": "com.artrainbow.self-blog",
       "buildNumber": "1.0.0"
     },
     "android": {
