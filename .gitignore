@@ -1,7 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 udemi/.expo-shared/
 udemi/.gitignore
-udemi/app.json
 udemi/babel.config.js
-udemi/package.json
 udemi/yarn.lock
